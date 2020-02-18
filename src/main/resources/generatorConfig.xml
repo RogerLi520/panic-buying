@@ -6,7 +6,7 @@
 
     <properties resource="generatorConfig.properties"></properties>
 
-    <context id="" targetRuntime="MyBatis3" defaultModelType="flat">
+    <context id="learningdb" targetRuntime="MyBatis3" defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8"/>
         <!-- 生成注释 -->
         <commentGenerator>
@@ -43,9 +43,9 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="" domainObjectName="" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
+        <table tableName="t_user" domainObjectName="User" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true">
-            <generatedKey column="" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="user_id" sqlStatement="MySql" identity="true"/>
         </table>
 
     </context>

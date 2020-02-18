@@ -1,5 +1,6 @@
 package com.wenyanwen123.buy.commons.util;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
@@ -31,6 +32,34 @@ public class EncryptionUtil {
         SimpleHash hash = new SimpleHash(hashAlgorithmName , credentials, salt, hashIterations);
         logger.debug("MD5加密，结果，result：{}", hash.toString());
         return hash.toString();
+    }
+
+    /**
+     * @Desc MD5
+     * @Author liww
+     * @Date 2020/2/18
+     * @Param [src]
+     * @return java.lang.String
+     */
+    public static String md5(String src) {
+        return DigestUtils.md5Hex(src);
+    }
+
+    /**
+     * @Desc 加密
+     * @Author liww
+     * @Date 2020/2/18
+     * @Param [beforePass, salt]
+     * @return java.lang.String
+     */
+    public static String beforePassToAfterPass(String beforePass, String salt) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(salt.charAt(0))
+                .append(salt.charAt(3))
+                .append(beforePass)
+                .append(salt.charAt(5))
+                .append(salt.charAt(2));
+        return md5(stringBuilder.toString());
     }
 
 }

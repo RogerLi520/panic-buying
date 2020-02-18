@@ -8,7 +8,7 @@
 
     <!-- 日志文件根目录 -->
     <properties>
-        <property name="PROJECT_NAME"></property>
+        <property name="PROJECT_NAME">panic-buying</property>
     </properties>
 
     <!-- 定义所有的appender -->
