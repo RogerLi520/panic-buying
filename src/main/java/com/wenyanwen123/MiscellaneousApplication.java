@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @SpringBootApplication
 //@EnableDiscoveryClient
 @EnableTransactionManagement
-@MapperScan("com.wenyanwen123.learning.dao.learningdb")
+@MapperScan("com.wenyanwen123.buy.dao.learningdb")
 public class MiscellaneousApplication {
 
     @RequestMapping("/")

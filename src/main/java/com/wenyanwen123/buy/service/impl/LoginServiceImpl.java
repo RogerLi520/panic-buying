@@ -3,11 +3,10 @@ package com.wenyanwen123.buy.service.impl;
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.commons.domain.learningdb.UserExample;
 import com.wenyanwen123.buy.commons.parameter.rp.login.LoginRp;
+import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
 import com.wenyanwen123.buy.commons.response.ResultCode;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.EncryptionUtil;
-import com.wenyanwen123.buy.commons.util.LogUtil;
-import com.wenyanwen123.buy.commons.util.UUIDUtil;
+import com.wenyanwen123.buy.commons.util.*;
 import com.wenyanwen123.buy.dao.learningdb.UserMapper;
 import com.wenyanwen123.buy.provider.redis.RedisService;
 import com.wenyanwen123.buy.provider.redis.UserKey;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @Description: TODO
@@ -40,6 +38,43 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private RedisService redisService;
+
+    /**
+     * @Desc 注册
+     * @Author liww
+     * @Date 2020/2/18
+     * @Param [param]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    @Override
+    public ResultResponse register(RegisterRp param) {
+        LogUtil.serviceStart(log, "注册");
+        if (param == null) {
+            return ResultResponse.fail("请输入手机号和密码");
+        }
+        // 判断手机号是否已存在
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andPhoneNumEqualTo(param.getPhoneNum());
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users != null && users.size() > 0) {
+            return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "该手机号码已被注册");
+        }
+        // 密码加密处理
+        String salt = RandomUtil.getRandomString(6);
+        String afterPass = EncryptionUtil.beforePassToAfterPass(param.getPassword(), salt);
+        // 保存用户信息
+        User user = new User();
+        user.setPhoneNum(param.getPhoneNum());
+        user.setPassword(afterPass);
+        user.setSalt(salt);
+        user.setIsLocked(false);
+        user.setCreateTime(DateUtil.getCurrentDate());
+        user.setCreateTimestamp(DateUtil.getTimeStamp());
+        user.setLoginCount(0);
+        userMapper.insert(user);
+        return ResultResponse.success("恭喜您，注册成功");
+    }
 
     /**
      * @Desc 登陆
@@ -68,9 +103,9 @@ public class LoginServiceImpl implements LoginService {
             String token = UUIDUtil.getUuid();
             // 添加cookie
             addCookie(response, token, user);
-            return ResultResponse.success(ResultCode.DEFAULT_SUCCESS_CODE, token);
+            return ResultResponse.success(token);
         } else {
-            return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "用户不存在");
+            return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "用户不存在，请先注册");
         }
     }
 

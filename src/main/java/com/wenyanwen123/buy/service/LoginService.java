@@ -1,6 +1,7 @@
 package com.wenyanwen123.buy.service;
 
 import com.wenyanwen123.buy.commons.parameter.rp.login.LoginRp;
+import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,15 @@ import javax.servlet.http.HttpServletResponse;
  * @Version 1.0
  */
 public interface LoginService {
+
+    /**
+     * @Desc 注册
+     * @Author liww
+     * @Date 2020/2/18
+     * @Param [param]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    ResultResponse register(RegisterRp param);
 
     /**
      * @Desc 登陆

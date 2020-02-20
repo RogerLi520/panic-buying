@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class BaseResponse {
 
     @JsonIgnore
-    private boolean isSuccess;
+    private Boolean isSuccess;
 
     @ResultCode
     private String resultCode;

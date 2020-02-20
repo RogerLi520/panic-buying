@@ -10,31 +10,31 @@ import java.io.IOException;
 import java.util.Random;
 
 /**
- * 随机数
+ * @Desc 获取各种随机数
+ * @Author liww
+ * @Date 2020/2/18
+ * @Version 1.0
  */
 public final class RandomUtil {
 
-    private RandomUtil() {
-    }
+    private RandomUtil() { }
 
-    /**
-     * 字符字典
-     */
     private static final char[] VCCHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
             'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'};
-    /**
-     * 数字字典
-     */
+
+    private static final char[] LOWERCASEANDNUM = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+            'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
     private static final char[] NUMBERS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    /**
-     * 生成随机数
-     */
-    private static Random random = new Random();
+
+    private static Random random = new Random(); // 随机数对象
 
     /**
-     * 获取随机字符串（4位）
-     *
-     * @return
+     * @Desc 获取随机字符串(4位)
+     * @Author liww
+     * @Date 2020/2/18
+     * @Param []
+     * @return java.lang.String
      */
     public static String getRandomString() {
         StringBuilder builder = new StringBuilder();
@@ -52,7 +52,7 @@ public final class RandomUtil {
     public static String getRandomString(int count) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            builder.append(VCCHARS[random.nextInt(VCCHARS.length)]);
+            builder.append(LOWERCASEANDNUM[random.nextInt(LOWERCASEANDNUM.length)]);
         }
         return builder.toString();
     }
