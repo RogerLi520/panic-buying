@@ -1,6 +1,6 @@
-package com.wenyanwen123.buy.provider.redis;
+package com.wenyanwen123.buy.provider.redis.keys;
 
-public abstract class BasePrefix implements KeyPrefix{
+public abstract class BasePrefix implements KeyPrefix {
 	
 	private int expireSeconds;
 	

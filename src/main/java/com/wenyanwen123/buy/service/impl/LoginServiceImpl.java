@@ -9,7 +9,7 @@ import com.wenyanwen123.buy.commons.response.ResultResponse;
 import com.wenyanwen123.buy.commons.util.*;
 import com.wenyanwen123.buy.dao.learningdb.UserMapper;
 import com.wenyanwen123.buy.provider.redis.RedisService;
-import com.wenyanwen123.buy.provider.redis.UserKey;
+import com.wenyanwen123.buy.provider.redis.keys.UserKey;
 import com.wenyanwen123.buy.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

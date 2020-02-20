@@ -43,9 +43,17 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="t_user" domainObjectName="User" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
+        <!-- <table tableName="t_user" domainObjectName="User" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true">
             <generatedKey column="user_id" sqlStatement="MySql" identity="true"/>
+        </table> -->
+        <table tableName="t_goods" domainObjectName="Goods" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="goods_id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="t_flash_sale_goods" domainObjectName="FlashSaleGoods" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 
     </context>

@@ -30,7 +30,7 @@ public class LogUtil {
      * @Param [logger, targetInfo]
      * @return void
      */
-    public static void callStart(Logger logger, String targetInfo, Integer userId) {
+    public static void callStart(Logger logger, String targetInfo, Long userId) {
         logger.debug(targetInfo + "接口调用开始，" + userId);
     }
 

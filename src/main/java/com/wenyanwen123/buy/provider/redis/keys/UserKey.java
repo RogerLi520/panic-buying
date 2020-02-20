@@ -1,4 +1,4 @@
-package com.wenyanwen123.buy.provider.redis;
+package com.wenyanwen123.buy.provider.redis.keys;
 
 /**
  * @Description: 用户相关的键名
