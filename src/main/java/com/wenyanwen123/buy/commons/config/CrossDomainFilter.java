@@ -27,7 +27,7 @@ public class CrossDomainFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        logger.debug("springboot过滤器开始，配置跨域相关的属性");
+        logger.trace("springboot过滤器开始，配置跨域相关的属性");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin")); // 设置允许跨域访问的地址

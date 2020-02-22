@@ -52,26 +52,26 @@ public class GoodsServiceImpl implements GoodsService {
      * @return com.wenyanwen123.buy.commons.response.ResultResponse
      */
     @Override
-    public ResultResponse goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
+    public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
         LogUtil.serviceStart(log, "获取商品列表");
         if (user == null) {
-            return ResultResponse.fail(ResultCode.TOKEN_EXCEPTION, "请先登陆");
+            return "请先登陆";
         }
         model.addAttribute(user);
         // 取缓存
-        String html = redisService.get(GoodsKey.goodsList, "", String.class);
-        if(!StringUtils.isEmpty(html)) {
-            return ResultResponse.success("操作成功", html);
+        String goodsListHtml = redisService.get(GoodsKey.goodsList, "", String.class);
+        if(!StringUtils.isEmpty(goodsListHtml)) {
+            return goodsListHtml;
         }
         List<GoodsListRr> goodsListRrs = flashSaleGoodsMapper.selectGoodsList();
         model.addAttribute("goodsList", goodsListRrs);
         // 手动渲染
         WebContext springWebContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
-        String goodsListHtml = thymeleafViewResolver.getTemplateEngine().process("/email/VerifyCode.html", springWebContext);
+        goodsListHtml = thymeleafViewResolver.getTemplateEngine().process("goods_list", springWebContext);
         if(StringUtils.isNotEmpty(goodsListHtml)) {
             redisService.set(GoodsKey.goodsList, "", goodsListHtml);
         }
-        return ResultResponse.success("操作成功", goodsListHtml);
+        return goodsListHtml;
     }
 
 }

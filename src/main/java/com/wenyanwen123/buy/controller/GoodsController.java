@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,12 +40,11 @@ public class GoodsController {
     @ApiOperation(value = "获取商品列表")
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
     @ResponseBody
-    @PostMapping("/list")
-    public ResultResponse goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
+    @GetMapping(value = "/list", produces="text/html")
+    public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
         LogUtil.callStart(log, "获取商品列表", user.getUserId());
-        ResultResponse resultResponse = goodsService.goodsList(request, response, model, user);
-        LogUtil.outputResult(log, resultResponse);
-        return resultResponse;
+        String goodsList = goodsService.goodsList(request, response, model, user);
+        return goodsList;
     }
 
 }

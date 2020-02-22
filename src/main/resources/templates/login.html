@@ -104,7 +104,7 @@
         var password = md5(str);
 
         $.ajax({
-            url: "/api/buy/login/login",
+            url: "/api/login/login",
             type: "POST",
             data:{
                 phoneNum:$("#phoneNum").val(),
@@ -112,9 +112,9 @@
             },
             success:function(data){
                 layer.closeAll();
-                if(data.isSuccess == true){
+                if(data.success == true){
                     layer.msg("登陆成功");
-                    window.location.href="/goods/to_list";
+                    window.location.href="/api/goods/list";
                 }else{
                     layer.msg(data.resultMsg);
                 }

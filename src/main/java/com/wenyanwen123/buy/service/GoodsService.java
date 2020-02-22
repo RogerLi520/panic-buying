@@ -22,6 +22,6 @@ public interface GoodsService {
      * @Param [request, response, model, user]
      * @return com.wenyanwen123.buy.commons.response.ResultResponse
      */
-    ResultResponse goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user);
+    String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user);
 
 }

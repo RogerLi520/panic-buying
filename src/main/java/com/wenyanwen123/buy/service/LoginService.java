@@ -1,5 +1,6 @@
 package com.wenyanwen123.buy.service;
 
+import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.commons.parameter.rp.login.LoginRp;
 import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
@@ -31,5 +32,14 @@ public interface LoginService {
      * @return com.wenyanwen123.buy.commons.response.ResultResponse
      */
     ResultResponse login(HttpServletResponse response, LoginRp param);
+
+    /**
+     * @Desc 添加cookie
+     * @Author liww
+     * @Date 2020/2/21
+     * @Param [response, token, user]
+     * @return void
+     */
+    public void addCookie(HttpServletResponse response, String token, User user);
 
 }

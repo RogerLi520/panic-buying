@@ -1,6 +1,7 @@
 package com.wenyanwen123.buy.provider.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.provider.redis.keys.KeyPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,7 @@ public class RedisService {
      */
     public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
         String realKey = prefix.getPrefix() + key;
-        String str = redisUtil.get(realKey).toString();
-        T result =  stringToBean(str, clazz);
+        T result = (T) redisUtil.get(realKey);
         return result;
     }
 
@@ -65,6 +65,18 @@ public class RedisService {
         }else {
             return JSON.toJavaObject(JSON.parseObject(str), clazz);
         }
+    }
+
+    /**
+     * @Desc 原子自增
+     * @Author liww
+     * @Date 2020/2/21
+     * @Param [prefix, key]
+     * @return java.lang.Long
+     */
+    public <T> Long incr(KeyPrefix prefix, String key) {
+        String realKey  = prefix.getPrefix() + key;
+        return redisUtil.incr(realKey, 1);
     }
 
 }

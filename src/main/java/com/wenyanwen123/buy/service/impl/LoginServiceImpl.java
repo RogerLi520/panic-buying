@@ -116,7 +116,7 @@ public class LoginServiceImpl implements LoginService {
      * @Param [response, token, user]
      * @return void
      */
-    private void addCookie(HttpServletResponse response, String token, User user) {
+    public void addCookie(HttpServletResponse response, String token, User user) {
         redisService.set(UserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(UserKey.token.expireSeconds());
