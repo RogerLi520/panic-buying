@@ -1,6 +1,7 @@
 package com.wenyanwen123.buy.commons.util;
 
 import com.alibaba.fastjson.JSON;
+import com.wenyanwen123.buy.commons.core.interceptor.UserContext;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
 import org.slf4j.Logger;
 
@@ -30,8 +31,8 @@ public class LogUtil {
      * @Param [logger, targetInfo]
      * @return void
      */
-    public static void callStart(Logger logger, String targetInfo, Long userId) {
-        logger.debug(targetInfo + "接口调用开始，" + userId);
+    public static void callStart(Logger logger, String targetInfo) {
+        logger.debug(targetInfo + "接口调用开始，" + UserContext.getUser().getUserId());
     }
 
     /**

@@ -334,8 +334,9 @@
   </update>
 
   <!-- 查询秒杀商品列表 -->
-  <select id="selectGoodsList" resultType="com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsListRr">
+  <select id="selectGoodsList" resultType="com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr">
     select
+    tfsg.id as id,
     tg.goods_id as goodsId,
     tg.goods_name as goodsName,
     tg.goods_title as goodsTitle,
@@ -348,6 +349,24 @@
     tfsg.end_timestamp as endTimestamp
     from t_flash_sale_goods tfsg left join t_goods tg on tfsg.goods_id=tg.goods_id
     where tg.is_on_sale=true and tg.is_delete=false
+  </select>
+
+  <!-- 查询抢购商品详情 -->
+  <select id="selectGoodsDetail" resultType="com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr">
+    select
+    tfsg.id as id,
+    tg.goods_id as goodsId,
+    tg.goods_name as goodsName,
+    tg.goods_title as goodsTitle,
+    tg.goods_img as goodsImg,
+    tg.goods_detail as goodsDetail,
+    tg.goods_price as goodsPrice,
+    tfsg.seckill_price as seckillPrice,
+    tfsg.stock_count as stockCount,
+    tfsg.start_timestamp as startTimestamp,
+    tfsg.end_timestamp as endTimestamp
+    from t_flash_sale_goods tfsg left join t_goods tg on tfsg.goods_id=tg.goods_id
+    where tg.is_on_sale=true and tg.is_delete=false and tfsg.goods_id=#{goodsId,jdbcType=BIGINT}
   </select>
 
 </mapper>

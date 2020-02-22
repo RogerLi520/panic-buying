@@ -1,7 +1,6 @@
 package com.wenyanwen123.buy.controller;
 
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.response.ResultCode;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
 import com.wenyanwen123.buy.commons.util.LogUtil;
 import com.wenyanwen123.buy.service.GoodsService;
@@ -13,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,9 +38,20 @@ public class GoodsController {
     @ResponseBody
     @GetMapping(value = "/list", produces="text/html")
     public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
-        LogUtil.callStart(log, "获取商品列表", user.getUserId());
+        LogUtil.callStart(log, "获取商品列表");
         String goodsList = goodsService.goodsList(request, response, model, user);
         return goodsList;
+    }
+
+    @ApiOperation(value = "获取商品详情")
+    @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
+    @ResponseBody
+    @GetMapping(value = "/detail/{goodsId}")
+    public ResultResponse goodsDetail(HttpServletRequest request, HttpServletResponse response, Model model, User user, @PathVariable("goodsId")long goodsId) {
+        LogUtil.callStart(log, "获取商品详情");
+        ResultResponse resultResponse = goodsService.goodsDetail(request, response, model, user, goodsId);
+        LogUtil.outputResult(log, resultResponse);
+        return resultResponse;
     }
 
 }

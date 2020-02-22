@@ -45,7 +45,7 @@ public class LoginController {
     @ResponseBody
     @PostMapping("/register")
     public ResultResponse register(@Valid RegisterRp param) {
-        LogUtil.callStart(log, "注册", null);
+        LogUtil.callStart(log, "注册");
         ResultResponse resultResponse = loginService.register(param);
         LogUtil.outputResult(log, resultResponse);
         return resultResponse;
@@ -56,7 +56,7 @@ public class LoginController {
     @ResponseBody
     @PostMapping("/login")
     public ResultResponse login(HttpServletResponse response, @Valid LoginRp param) {
-        LogUtil.callStart(log, "登陆", null);
+        LogUtil.callStart(log, "登陆");
         ResultResponse resultResponse = loginService.login(response, param);
         LogUtil.outputResult(log, resultResponse);
         return resultResponse;

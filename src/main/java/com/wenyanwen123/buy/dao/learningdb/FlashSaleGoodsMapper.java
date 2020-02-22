@@ -4,7 +4,7 @@ import com.wenyanwen123.buy.commons.domain.learningdb.FlashSaleGoods;
 import com.wenyanwen123.buy.commons.domain.learningdb.FlashSaleGoodsExample;
 import java.util.List;
 
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsListRr;
+import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -105,6 +105,15 @@ public interface FlashSaleGoodsMapper {
      * @Param []
      * @return java.util.List<com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsListRr>
      */
-    List<GoodsListRr> selectGoodsList();
+    List<GoodsRr> selectGoodsList();
+
+    /**
+     * @Desc 查询抢购商品详情
+     * @Author liww
+     * @Date 2020/2/22
+     * @Param [goodsId]
+     * @return com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr
+     */
+    GoodsRr selectGoodsDetail(long goodsId);
 
 }

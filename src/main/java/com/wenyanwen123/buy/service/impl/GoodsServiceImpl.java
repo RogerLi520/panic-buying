@@ -1,23 +1,25 @@
 package com.wenyanwen123.buy.service.impl;
 
+import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsListRr;
-import com.wenyanwen123.buy.commons.response.ResultCode;
+import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsDetailRr;
+import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
+import com.wenyanwen123.buy.commons.util.DateUtil;
 import com.wenyanwen123.buy.commons.util.LogUtil;
 import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
+import com.wenyanwen123.buy.dao.learningdb.GoodsMapper;
 import com.wenyanwen123.buy.provider.redis.RedisService;
 import com.wenyanwen123.buy.provider.redis.keys.GoodsKey;
 import com.wenyanwen123.buy.service.GoodsService;
+import com.wenyanwen123.buy.service.OrderService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.thymeleaf.context.WebContext;
-import org.thymeleaf.spring5.context.webflux.SpringWebFluxContext;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     @Autowired
     private FlashSaleGoodsMapper flashSaleGoodsMapper;
@@ -63,7 +71,7 @@ public class GoodsServiceImpl implements GoodsService {
         if(!StringUtils.isEmpty(goodsListHtml)) {
             return goodsListHtml;
         }
-        List<GoodsListRr> goodsListRrs = flashSaleGoodsMapper.selectGoodsList();
+        List<GoodsRr> goodsListRrs = flashSaleGoodsMapper.selectGoodsList();
         model.addAttribute("goodsList", goodsListRrs);
         // 手动渲染
         WebContext springWebContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
@@ -72,6 +80,49 @@ public class GoodsServiceImpl implements GoodsService {
             redisService.set(GoodsKey.goodsList, "", goodsListHtml);
         }
         return goodsListHtml;
+    }
+
+    /**
+     * @Desc 商品详情
+     * @Author liww
+     * @Date 2020/2/22
+     * @Param [request, response, model, user, goodsId]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    @Override
+    public ResultResponse goodsDetail(HttpServletRequest request, HttpServletResponse response, Model model, User user, long goodsId) {
+        LogUtil.serviceStart(log, "商品详情");
+        GoodsDetailRr goodsDetailRr = new GoodsDetailRr();
+        GoodsRr goodsRr = flashSaleGoodsMapper.selectGoodsDetail(goodsId);
+        SeckillOrder seckillOrder = orderService.getSeckillOrderByUserIdGoodsId(user.getUserId(), goodsId);
+        Integer startTime = goodsRr.getStartTimestamp();
+        Integer endTime = goodsRr.getEndTimestamp();
+        Integer now = DateUtil.getTimeStamp();
+        int seckillStatus = 0;
+        int remainSeconds = 0;
+        if (now < startTime) {
+            // 倒计时
+            seckillStatus = 0;
+            remainSeconds = (int) ((startTime - now ));
+        } else if (now > endTime) {
+            // 结束
+            seckillStatus = 2;
+            remainSeconds = -1;
+        } else {
+            // 进行中
+            seckillStatus = 1;
+            remainSeconds = 0;
+        }
+        goodsDetailRr.setGoodsRr(goodsRr);
+        goodsDetailRr.setUser(user);
+        goodsDetailRr.setSeckillStatus(seckillStatus);
+        goodsDetailRr.setRemainSeconds(remainSeconds);
+        if (seckillOrder == null) {
+            goodsDetailRr.setPurchased(false);
+        }else {
+            goodsDetailRr.setPurchased(true);
+        }
+        return ResultResponse.success(goodsDetailRr);
     }
 
 }

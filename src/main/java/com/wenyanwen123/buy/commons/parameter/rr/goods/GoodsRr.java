@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "GoodsListRr", description = "商品列表返回值")
-public class GoodsListRr {
+public class GoodsRr {
 
     @ApiModelProperty(value = "秒杀商品表ID", name = "id")
     private Long id;
