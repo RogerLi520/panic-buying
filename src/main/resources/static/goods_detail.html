@@ -41,13 +41,13 @@
 				<td>秒杀开始时间</td>
 				<td id="startTime"></td>
 				<td><input type="hidden" id="remainSeconds" /> <span
-					id="miaoshaTip"></span></td>
+					id="seckillTip"></span></td>
 				<td>
 					<div class="row">
 			        	<div class="form-inline">
 					        <img id="verifyCodeImg" width="80" height="32"  style="display:none" onclick="refreshVerifyCode()"/>
 					        <input id="verifyCode"  class="form-control" style="display:none"/>
-					        <button class="btn btn-primary" type="button" id="buyButton"onclick="getMiaoshaPath()">立即秒杀</button>
+					        <button class="btn btn-primary" type="button" id="buyButton"onclick="getSeckillPath()">立即秒杀</button>
 			        	</div>
 	        		</div>
 				</td>
@@ -58,7 +58,7 @@
 			</tr>
 			<tr>
 				<td>秒杀价</td>
-				<td colspan="3" id="miaoshaPrice"></td>
+				<td colspan="3" id="seckillPrice"></td>
 			</tr>
 			<tr>
 				<td>库存数量</td>
@@ -73,36 +73,36 @@
 	});
 
 	function getDetail() {
-		var goodsId = g_getQueryString("goodsId");
+		var goodsId = getQueryString("goodsId");
 		$.ajax({
 			url : "/api/goods/detail/" + goodsId,
 			type : "GET",
 			success : function(data) {
-				if (data.code == 0) {
+				if (data.success == true) {
 					render(data.data);
 				} else {
-					layer.msg(data.msg);
+					layer.msg(data.resultMsg);
 				}
 			},
 			error : function() {
-				layer.msg("客户端请求有误");
+				layer.msg("服务器异常");
 			}
 		});
 	}
 
 	function render(detail) {
-		var miaoshaStatus = detail.miaoshaStatus;
+		var seckillStatus = detail.seckillStatus;
 		var remainSeconds = detail.remainSeconds;
-		var goods = detail.goods;
+		var goods = detail.goodsRr;
 		var user = detail.user;
 		if (user) {$("#userTip").hide();}
 		$("#goodsName").text(goods.goodsName);
 		$("#goodsImg").attr("src", goods.goodsImg);
-		$("#startTime").text(new Date(goods.startDate).format("yyyy-MM-dd hh:mm:ss"));
+		$("#startTime").text(timestampToTime(goods.startTimestamp));
 		$("#remainSeconds").val(remainSeconds);
-		$("#goodsId").val(goods.id);
+		$("#goodsId").val(goods.goodsId);
 		$("#goodsPrice").text(goods.goodsPrice);
-		$("#miaoshaPrice").text(goods.miaoshaPrice);
+		$("#seckillPrice").text(goods.seckillPrice);
 		$("#stockCount").text(goods.stockCount);
 		countDown(detail);
 	}
@@ -111,51 +111,51 @@
 		var remainSeconds = $("#remainSeconds").val();
 		var timeout;
 		if (remainSeconds > 0) {
-			//秒杀还没开始，倒计时
+			// 倒计时
 			$("#buyButton").attr("disabled", true);
-			$("#miaoshaTip").html("秒杀倒计时：" + remainSeconds + "秒");
+			$("#seckillTip").html("秒杀倒计时：" + remainSeconds + "秒");
 			timeout = setTimeout(function() {
 				$("#countDown").text(remainSeconds - 1);
 				$("#remainSeconds").val(remainSeconds - 1);
 				countDown();
 			}, 1000);
 		} else if (remainSeconds == 0) {
-			if (!detail.message) {
-				//秒杀进行中
+			if (!detail.purchased) {
+				// 秒杀进行中
 				$("#buyButton").attr("disabled", false);
 				if (timeout) {
 					clearTimeout(timeout);
 				}
-				$("#miaoshaTip").html("秒杀进行中");
-				$("#verifyCodeImg").attr("src", "/miaosha/verifyCode?goodsId="+g_getQueryString("goodsId"));
+				$("#seckillTip").html("秒杀进行中");
+				$("#verifyCodeImg").attr("src", "/api/flash-sale/verify-code?goodsId=" + getQueryString("goodsId"));
 				$("#verifyCodeImg").show();
 				$("#verifyCode").show();
 			} else {
 				$("#buyButton").attr("disabled", true);
-				$("#miaoshaTip").html("你已经秒杀了");
+				$("#seckillTip").html("您已经秒杀了");
 			}
-		} else {//秒杀已经结束
+		} else { // 秒杀已经结束
 			$("#buyButton").attr("disabled", true);
-			$("#miaoshaTip").html("秒杀已经结束");
+			$("#seckillTip").html("秒杀已经结束");
 		}
 	}
 
-	function getMiaoshaPath() {
-		var goodsId = g_getQueryString("goodsId");
-		g_showLoading();
+	function getSeckillPath() {
+		var goodsId = getQueryString("goodsId");
+		showLoading();
 		$.ajax({
-			url : "/miaosha/path",
+			url : "/api/flash-sale/path",
 			type : "GET",
 			data : {
 				goodsId : goodsId,
 				verifyCode:$("#verifyCode").val()
 			},
 			success : function(data) {
-				if (data.code == 0) {
+				if (data.success == true) {
 					var path = data.data;
-					doMiaosha(path);
+					doSeckill(path);
 				} else {
-					layer.msg(data.msg);
+					layer.msg(data.resultMsg);
 				}
 			},
 			error : function() {
@@ -164,13 +164,12 @@
 		})
 	}
 
-	/**秒杀业务*/
-	function doMiaosha(path) {
+	function doSeckill(path) {
 		$.ajax({
 			url : "/miaosha/" + path + "/do_miaosha",
 			type : "POST",
 			data : {
-				goodsId : g_getQueryString("goodsId")
+				goodsId : getQueryString("goodsId")
 			},
 			success : function(data) {
 				if (data.code == 0) {
@@ -183,7 +182,6 @@
 				layer.msg("客户端请求有误");
 			}
 		});
-
 	}
 
 	/**轮询查询订单信息*/
@@ -227,9 +225,12 @@
 			}
 		});
 	}
-	
-	function refreshVerifyCode(){
-		$("#verifyCodeImg").attr("src", "/miaosha/verifyCode?goodsId="+g_getQueryString("goodsId")+"&timestamp="+new Date().getTime());
+
+    /**
+	 * 刷新验证码
+     */
+	function refreshVerifyCode() {
+		$("#verifyCodeImg").attr("src", "/api/flash-sale/verify-code?goodsId=" + getQueryString("goodsId") + "&timestamp=" + new Date().getTime());
 	}
 </script>
 </html>

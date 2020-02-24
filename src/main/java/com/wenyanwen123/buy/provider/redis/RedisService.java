@@ -79,4 +79,28 @@ public class RedisService {
         return redisUtil.incr(realKey, 1);
     }
 
+    /**
+     * @Desc 删除
+     * @Author liww
+     * @Date 2020/2/24
+     * @Param [prefix, key]
+     * @return boolean
+     */
+    public void delete(KeyPrefix prefix, String key) {
+        String realKey  = prefix.getPrefix() + key;
+        redisUtil.del(realKey);
+    }
+
+    /**
+     * @Desc 减
+     * @Author liww
+     * @Date 2020/2/24
+     * @Param [prefix, key]
+     * @return java.lang.Long
+     */
+    public <T> Long decr(KeyPrefix prefix, String key) {
+        String realKey  = prefix.getPrefix() + key;
+        return redisUtil.decr(realKey, 1);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.wenyanwen123.buy.commons.util.security;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.security.MessageDigest;
 
 
@@ -82,6 +84,10 @@ public class MD5Util {
         } catch (Exception exception) {
         }
         return resultString;
+    }
+
+    public static String md5(String src) {
+        return DigestUtils.md5Hex(src);
     }
 
     private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};

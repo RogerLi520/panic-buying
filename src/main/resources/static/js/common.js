@@ -9,7 +9,7 @@ function showLoading(){
 //salt
 var passsword_salt="1a2b3c4d"
 // 获取url参数
-function g_getQueryString(name) {
+function getQueryString(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 	var r = window.location.search.substr(1).match(reg);
 	if(r != null) return unescape(r[2]);
@@ -32,5 +32,20 @@ Date.prototype.format = function (format) {
             format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));  
     }  
     return format;  
-};  
+};
 
+/**
+ * 将时间戳转化为时间戳格式
+ * @param timestamp
+ * @returns {string}
+ */
+function timestampToTime(timestamp) {
+    var date = new Date(timestamp * 1000); // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = date.getDate() + ' ';
+    var h = date.getHours() + ':';
+    var m = date.getMinutes() + ':';
+    var s = date.getSeconds();
+    return Y+M+D+h+m+s;
+}
