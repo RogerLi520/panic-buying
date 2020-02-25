@@ -2,12 +2,19 @@ package com.wenyanwen123.buy.service.impl;
 
 import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
+import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
 import com.wenyanwen123.buy.commons.response.ResultCode;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
+import com.wenyanwen123.buy.commons.util.BeanUtil;
 import com.wenyanwen123.buy.commons.util.LogUtil;
 import com.wenyanwen123.buy.commons.util.UUIDUtil;
 import com.wenyanwen123.buy.commons.util.security.MD5Util;
 import com.wenyanwen123.buy.commons.util.security.VerifyCodeUtil;
+import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
+import com.wenyanwen123.buy.dao.learningdb.SeckillOrderMapper;
+import com.wenyanwen123.buy.provider.rabbitmq.MQSender;
+import com.wenyanwen123.buy.provider.rabbitmq.TopicRabbitConfig;
+import com.wenyanwen123.buy.provider.rabbitmq.message.SeckillMessage;
 import com.wenyanwen123.buy.provider.redis.RedisService;
 import com.wenyanwen123.buy.provider.redis.keys.GoodsKey;
 import com.wenyanwen123.buy.provider.redis.keys.SeckillKey;
@@ -43,7 +50,13 @@ public class FlashSaleServiceImpl implements FlashSaleService {
     private OrderService orderService;
 
     @Autowired
+    private FlashSaleGoodsMapper flashSaleGoodsMapper;
+
+    @Autowired
     private VerifyCodeUtil verifyCodeUtil;
+
+    @Autowired
+    private MQSender mqSender;
 
     private HashMap<Long, Boolean> goodsStockOverMap =  new HashMap<Long, Boolean>(); // 商品库存
 
@@ -122,8 +135,31 @@ public class FlashSaleServiceImpl implements FlashSaleService {
             goodsStockOverMap.put(goodsId, true);
             return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "商品已秒杀完毕");
         }
-        // 交给消息队列处理
+        // 秒杀成功，交给消息队列处理
+        SeckillMessage seckillMessage = new SeckillMessage();
+        seckillMessage.setGoodsId(goodsId);
+        seckillMessage.setUser(user);
+        String message = BeanUtil.beanToString(seckillMessage);
+        mqSender.sendSeckillMessage("topicExchange", TopicRabbitConfig.seckill, message);
         return null;
+    }
+
+    /**
+     * @Desc 下单
+     * @Author liww
+     * @Date 2020/2/25
+     * @Param [user, goodsRr]
+     * @return void
+     */
+    @Override
+    public void placeOrder(User user, GoodsRr goodsRr) {
+        LogUtil.serviceStart(log, "下单");
+        // 减库存
+        int sqlResult = flashSaleGoodsMapper.reduceStock(goodsRr.getGoodsId(), 1);
+        if (sqlResult > 0) {
+            // 创建订单
+
+        }
     }
 
 }

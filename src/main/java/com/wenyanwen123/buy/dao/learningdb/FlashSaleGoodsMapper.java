@@ -116,4 +116,13 @@ public interface FlashSaleGoodsMapper {
      */
     GoodsRr selectGoodsDetail(long goodsId);
 
+    /**
+     * @Desc 减库存
+     * @Author liww
+     * @Date 2020/2/25
+     * @Param [goodsId, num]
+     * @return int
+     */
+    int reduceStock(Long goodsId, Integer num);
+
 }

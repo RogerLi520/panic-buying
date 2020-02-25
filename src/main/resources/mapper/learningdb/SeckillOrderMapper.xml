@@ -379,4 +379,15 @@
       is_del = #{isDel,jdbcType=BIT}
     where seckill_id = #{seckillId,jdbcType=BIGINT}
   </update>
+
+  <!-- 根据用户ID和商品ID查询用户订单 -->
+  <select id="getSeckillOrderByUserIdGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_seckill_order
+    where user_id=#{userId,jdbcType=BIGINT}
+    and goods_id=#{goodsId,jdbcType=BIGINT}
+    and is_del=false
+  </select>
+
 </mapper>

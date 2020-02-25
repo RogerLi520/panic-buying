@@ -1,6 +1,7 @@
 package com.wenyanwen123.buy.service;
 
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
+import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
 import com.wenyanwen123.buy.commons.response.ResultResponse;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,5 +45,14 @@ public interface FlashSaleService {
      * @return com.wenyanwen123.buy.commons.response.ResultResponse
      */
     ResultResponse seckill(Model model, User user, @RequestParam("goodsId") long goodsId, @PathVariable("path") String path);
+
+    /**
+     * @Desc 下单
+     * @Author liww
+     * @Date 2020/2/25
+     * @Param [user, goodsRr]
+     * @return void
+     */
+    void placeOrder(User user, GoodsRr goodsRr);
 
 }

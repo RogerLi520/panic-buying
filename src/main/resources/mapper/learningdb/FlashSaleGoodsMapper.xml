@@ -369,4 +369,12 @@
     where tg.is_on_sale=true and tg.is_delete=false and tfsg.goods_id=#{goodsId,jdbcType=BIGINT}
   </select>
 
+  <!-- 减库存 -->
+  <update id="reduceStock">
+    update t_flash_sale_goods
+    set stock_count = stock_count - #{num}
+    where goods_id=#{goodsId,jdbcType=BIGINT}
+    and stock_count > 0
+  </update>
+
 </mapper>
