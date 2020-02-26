@@ -390,4 +390,13 @@
     and is_del=false
   </select>
 
+  <!-- 根据订单编号查询订单 -->
+  <select id="selectOrderByOrderNum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_seckill_order
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+    and is_del=false
+  </select>
+
 </mapper>

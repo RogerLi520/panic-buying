@@ -95,4 +95,14 @@ public interface SeckillOrderSnapshotMapper {
      * @mbg.generated Wed Feb 26 09:56:37 CST 2020
      */
     int updateByPrimaryKey(SeckillOrderSnapshot record);
+
+    /**
+     * @Desc 根据订单编号查询订单快照
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [orderNum]
+     * @return com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderSnapshot
+     */
+    SeckillOrderSnapshot selectByOrderNum(String orderNum);
+
 }

@@ -5,6 +5,8 @@ import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderSnapshot;
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
 import com.wenyanwen123.buy.commons.parameter.rr.order.SeckillOrderInfo;
+import com.wenyanwen123.buy.commons.response.ResultCode;
+import com.wenyanwen123.buy.commons.response.ResultResponse;
 import com.wenyanwen123.buy.commons.util.AdapterUtil;
 import com.wenyanwen123.buy.commons.util.DateUtil;
 import com.wenyanwen123.buy.commons.util.LogUtil;
@@ -115,6 +117,32 @@ public class OrderServiceImpl implements OrderService {
      */
     private String orderNumFactory() {
         return UUIDUtil.getUuid();
+    }
+
+    /**
+     * @Desc 订单详情
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [user, orderNum]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    @Override
+    public ResultResponse orderDetail(User user, String orderNum) {
+        LogUtil.serviceStart(log, "订单详情");
+        SeckillOrder seckillOrder = seckillOrderMapper.selectOrderByOrderNum(orderNum);
+        if (seckillOrder == null) {
+            return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "订单不存在");
+        }
+        SeckillOrderSnapshot seckillOrderSnapshot = seckillOrderSnapshotMapper.selectByOrderNum(orderNum);
+        // 返回订单详情
+        SeckillOrderInfo seckillOrderInfo = AdapterUtil.adapter(seckillOrderSnapshot, SeckillOrderInfo.class);
+        seckillOrderInfo.setUserId(user.getUserId());
+        seckillOrderInfo.setGoodsId(seckillOrder.getGoodsId());
+        seckillOrderInfo.setOrderChannel(seckillOrder.getOrderChannel());
+        seckillOrderInfo.setOrderStatus(seckillOrder.getOrderStatus());
+        seckillOrderInfo.setCreateTime(seckillOrder.getCreateTime());
+        seckillOrderInfo.setCreateTimestamp(seckillOrder.getCreateTimestamp());
+        return ResultResponse.success(seckillOrderInfo);
     }
 
 }

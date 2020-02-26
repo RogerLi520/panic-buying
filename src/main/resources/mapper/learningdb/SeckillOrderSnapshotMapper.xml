@@ -347,4 +347,13 @@
       goods_detail = #{goodsDetail,jdbcType=VARCHAR}
     where snapshot_id = #{snapshotId,jdbcType=BIGINT}
   </update>
+
+  <!-- 根据订单编号查询订单快照 -->
+  <select id="selectByOrderNum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_seckill_order_snapshot
+    where order_num=#{orderNum,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

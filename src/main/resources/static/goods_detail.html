@@ -206,7 +206,7 @@
 						layer.confirm("恭喜您，秒杀成功！查看订单？", {
 							btn : [ "确定", "取消" ]
 						}, function() {
-							window.location.href = "/order_detail.html?orderId=" + result;
+							window.location.href = "/order_detail.html?orderNum=" + result;
 						}, function() {
 							layer.closeAll();
 						});

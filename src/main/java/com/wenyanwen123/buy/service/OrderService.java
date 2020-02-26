@@ -5,6 +5,8 @@ import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
 import com.wenyanwen123.buy.commons.parameter.rr.order.SeckillOrderInfo;
+import com.wenyanwen123.buy.commons.response.ResultResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Desc 订单
@@ -31,5 +33,14 @@ public interface OrderService {
      * @return com.wenyanwen123.buy.commons.parameter.rr.order.SeckillOrderInfo
      */
     SeckillOrderInfo placeSeckillOrder(User user, GoodsRr goods);
+
+    /**
+     * @Desc 订单详情
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [user, orderNum]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    ResultResponse orderDetail(User user, @RequestParam("orderId") String orderNum);
 
 }

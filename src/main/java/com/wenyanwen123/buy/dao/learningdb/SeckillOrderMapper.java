@@ -105,4 +105,13 @@ public interface SeckillOrderMapper {
      */
     SeckillOrder getSeckillOrderByUserIdGoodsId(Long userId, Long goodsId);
 
+    /**
+     * @Desc 根据订单编号查询订单
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [orderNum]
+     * @return com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder
+     */
+    SeckillOrder selectOrderByOrderNum(String orderNum);
+
 }
