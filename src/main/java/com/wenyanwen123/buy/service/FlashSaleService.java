@@ -46,13 +46,4 @@ public interface FlashSaleService {
      */
     ResultResponse seckill(Model model, User user, @RequestParam("goodsId") long goodsId, @PathVariable("path") String path);
 
-    /**
-     * @Desc 下单
-     * @Author liww
-     * @Date 2020/2/25
-     * @Param [user, goodsRr]
-     * @return void
-     */
-    void placeOrder(User user, GoodsRr goodsRr);
-
 }

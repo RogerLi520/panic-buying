@@ -54,12 +54,11 @@
         <table tableName="t_flash_sale_goods" domainObjectName="FlashSaleGoods" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table> -->
-
+        </table>
         <table tableName="t_seckill_order" domainObjectName="SeckillOrder" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true">
             <generatedKey column="seckill_id" sqlStatement="MySql" identity="true"/>
-        </table>
+        </table> -->
         <table tableName="t_seckill_order_snapshot" domainObjectName="SeckillOrderSnapshot" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true">
             <generatedKey column="snapshot_id" sqlStatement="MySql" identity="true"/>

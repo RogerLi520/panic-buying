@@ -144,22 +144,4 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         return null;
     }
 
-    /**
-     * @Desc 下单
-     * @Author liww
-     * @Date 2020/2/25
-     * @Param [user, goodsRr]
-     * @return void
-     */
-    @Override
-    public void placeOrder(User user, GoodsRr goodsRr) {
-        LogUtil.serviceStart(log, "下单");
-        // 减库存
-        int sqlResult = flashSaleGoodsMapper.reduceStock(goodsRr.getGoodsId(), 1);
-        if (sqlResult > 0) {
-            // 创建订单
-
-        }
-    }
-
 }

@@ -40,9 +40,6 @@ public class MQReceiver {
 	private OrderService orderService;
 
 	@Autowired
-	private FlashSaleService flashSaleService;
-
-	@Autowired
 	private SeckillOrderMapper seckillOrderMapper;
 
 	@Autowired
@@ -76,7 +73,7 @@ public class MQReceiver {
 			return;
 		}
 		// 减库存 下订单 写入秒杀订单
-		flashSaleService.placeOrder(user, goods);
+		orderService.placeSeckillOrder(user, goods);
 	}
 
 }
