@@ -1,6 +1,6 @@
 package com.wenyanwen123.buy.provider.rabbitmq.message;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
 import lombok.Data;
 
 /**

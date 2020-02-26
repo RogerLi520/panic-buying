@@ -1,9 +1,8 @@
 package com.wenyanwen123.buy.controller;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.LogUtil;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.LogUtil;
 import com.wenyanwen123.buy.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * @Description: 订单

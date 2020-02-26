@@ -1,12 +1,12 @@
 package com.wenyanwen123.buy.service.impl;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsDetailRr;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.DateUtil;
-import com.wenyanwen123.buy.commons.util.LogUtil;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.model.vo.goods.GoodsDetailVO;
+import com.wenyanwen123.buy.common.model.vo.goods.GoodsVO;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.DateUtil;
+import com.wenyanwen123.buy.common.util.LogUtil;
 import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
 import com.wenyanwen123.buy.dao.learningdb.GoodsMapper;
 import com.wenyanwen123.buy.provider.redis.RedisService;
@@ -57,7 +57,7 @@ public class GoodsServiceImpl implements GoodsService {
      * @Author liww
      * @Date 2020/2/20
      * @Param [request, response, model, user]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
     public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
@@ -71,7 +71,7 @@ public class GoodsServiceImpl implements GoodsService {
         if(!StringUtils.isEmpty(goodsListHtml)) {
             return goodsListHtml;
         }
-        List<GoodsRr> goodsListRrs = flashSaleGoodsMapper.selectGoodsList();
+        List<GoodsVO> goodsListRrs = flashSaleGoodsMapper.selectGoodsList();
         model.addAttribute("goodsList", goodsListRrs);
         // 手动渲染
         WebContext springWebContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
@@ -87,13 +87,13 @@ public class GoodsServiceImpl implements GoodsService {
      * @Author liww
      * @Date 2020/2/22
      * @Param [request, response, model, user, goodsId]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
     public ResultResponse goodsDetail(HttpServletRequest request, HttpServletResponse response, Model model, User user, long goodsId) {
         LogUtil.serviceStart(log, "商品详情");
-        GoodsDetailRr goodsDetailRr = new GoodsDetailRr();
-        GoodsRr goodsRr = flashSaleGoodsMapper.selectGoodsDetail(goodsId);
+        GoodsDetailVO goodsDetailRr = new GoodsDetailVO();
+        GoodsVO goodsRr = flashSaleGoodsMapper.selectGoodsDetail(goodsId);
         SeckillOrder seckillOrder = orderService.getSeckillOrderByUserIdGoodsId(user.getUserId(), goodsId);
         Integer startTime = goodsRr.getStartTimestamp();
         Integer endTime = goodsRr.getEndTimestamp();

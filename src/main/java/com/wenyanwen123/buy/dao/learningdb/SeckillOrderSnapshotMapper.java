@@ -1,7 +1,7 @@
 package com.wenyanwen123.buy.dao.learningdb;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderSnapshot;
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderSnapshotExample;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrderSnapshot;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrderSnapshotExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -101,7 +101,7 @@ public interface SeckillOrderSnapshotMapper {
      * @Author liww
      * @Date 2020/2/26
      * @Param [orderNum]
-     * @return com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderSnapshot
+     * @return com.wenyanwen123.buy.common.domain.learningdb.SeckillOrderSnapshot
      */
     SeckillOrderSnapshot selectByOrderNum(String orderNum);
 

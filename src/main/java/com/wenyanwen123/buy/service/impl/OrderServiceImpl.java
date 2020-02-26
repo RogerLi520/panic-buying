@@ -1,16 +1,16 @@
 package com.wenyanwen123.buy.service.impl;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderSnapshot;
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
-import com.wenyanwen123.buy.commons.parameter.rr.order.SeckillOrderInfo;
-import com.wenyanwen123.buy.commons.response.ResultCode;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.AdapterUtil;
-import com.wenyanwen123.buy.commons.util.DateUtil;
-import com.wenyanwen123.buy.commons.util.LogUtil;
-import com.wenyanwen123.buy.commons.util.UUIDUtil;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrderSnapshot;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.model.vo.goods.GoodsVO;
+import com.wenyanwen123.buy.common.model.vo.order.SeckillOrderDetailVO;
+import com.wenyanwen123.buy.common.response.ResultCode;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.AdapterUtil;
+import com.wenyanwen123.buy.common.util.DateUtil;
+import com.wenyanwen123.buy.common.util.LogUtil;
+import com.wenyanwen123.buy.common.util.UUIDUtil;
 import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
 import com.wenyanwen123.buy.dao.learningdb.SeckillOrderMapper;
 import com.wenyanwen123.buy.dao.learningdb.SeckillOrderSnapshotMapper;
@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
      * @Author liww
      * @Date 2020/2/22
      * @Param [userId, goodsId]
-     * @return com.wenyanwen123.buy.commons.domain.learningdb.User
+     * @return com.wenyanwen123.buy.common.domain.learningdb.User
      */
     @Override
     public SeckillOrder getSeckillOrderByUserIdGoodsId(long userId, long goodsId) {
@@ -65,10 +65,10 @@ public class OrderServiceImpl implements OrderService {
      * @Author liww
      * @Date 2020/2/26
      * @Param [user, goods]
-     * @return com.wenyanwen123.buy.commons.parameter.rr.order.SeckillOrderInfo
+     * @return com.wenyanwen123.buy.common.model.vo.order.SeckillOrderInfo
      */
     @Override
-    public SeckillOrderInfo placeSeckillOrder(User user, GoodsRr goods) {
+    public SeckillOrderDetailVO placeSeckillOrder(User user, GoodsVO goods) {
         LogUtil.serviceStart(log, "下单");
         // 减库存
         int sqlResult = flashSaleGoodsMapper.reduceStock(goods.getGoodsId(), 1);
@@ -97,7 +97,7 @@ public class OrderServiceImpl implements OrderService {
             // 将订单存入redis缓存中
             redisService.set(OrderKey.seckillOrder, user.getUserId() + "_" + goods.getGoodsId(), seckillOrder);
             // 返回订单信息
-            SeckillOrderInfo seckillOrderInfo = AdapterUtil.adapter(goods, SeckillOrderInfo.class);
+            SeckillOrderDetailVO seckillOrderInfo = AdapterUtil.adapter(goods, SeckillOrderDetailVO.class);
             seckillOrderInfo.setUserId(user.getUserId());
             seckillOrderInfo.setOrderNum(seckillOrder.getOrderNum());
             return seckillOrderInfo;
@@ -124,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
      * @Author liww
      * @Date 2020/2/26
      * @Param [user, orderNum]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
     public ResultResponse orderDetail(User user, String orderNum) {
@@ -135,14 +135,14 @@ public class OrderServiceImpl implements OrderService {
         }
         SeckillOrderSnapshot seckillOrderSnapshot = seckillOrderSnapshotMapper.selectByOrderNum(orderNum);
         // 返回订单详情
-        SeckillOrderInfo seckillOrderInfo = AdapterUtil.adapter(seckillOrderSnapshot, SeckillOrderInfo.class);
-        seckillOrderInfo.setUserId(user.getUserId());
-        seckillOrderInfo.setGoodsId(seckillOrder.getGoodsId());
-        seckillOrderInfo.setOrderChannel(seckillOrder.getOrderChannel());
-        seckillOrderInfo.setOrderStatus(seckillOrder.getOrderStatus());
-        seckillOrderInfo.setCreateTime(seckillOrder.getCreateTime());
-        seckillOrderInfo.setCreateTimestamp(seckillOrder.getCreateTimestamp());
-        return ResultResponse.success(seckillOrderInfo);
+        SeckillOrderDetailVO seckillOrderDetailVO = AdapterUtil.adapter(seckillOrderSnapshot, SeckillOrderDetailVO.class);
+        seckillOrderDetailVO.setUserId(user.getUserId());
+        seckillOrderDetailVO.setGoodsId(seckillOrder.getGoodsId());
+        seckillOrderDetailVO.setOrderChannel(seckillOrder.getOrderChannel());
+        seckillOrderDetailVO.setOrderStatus(seckillOrder.getOrderStatus());
+        seckillOrderDetailVO.setCreateTime(seckillOrder.getCreateTime());
+        seckillOrderDetailVO.setCreateTimestamp(seckillOrder.getCreateTimestamp());
+        return ResultResponse.success(seckillOrderDetailVO);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.wenyanwen123.buy.dao.learningdb;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrderExample;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrderExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -101,7 +101,7 @@ public interface SeckillOrderMapper {
      * @Author liww
      * @Date 2020/2/25
      * @Param [userId, goodsId]
-     * @return com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder
+     * @return com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder
      */
     SeckillOrder getSeckillOrderByUserIdGoodsId(Long userId, Long goodsId);
 
@@ -110,7 +110,7 @@ public interface SeckillOrderMapper {
      * @Author liww
      * @Date 2020/2/26
      * @Param [orderNum]
-     * @return com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder
+     * @return com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder
      */
     SeckillOrder selectOrderByOrderNum(String orderNum);
 

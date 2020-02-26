@@ -1,12 +1,12 @@
 package com.wenyanwen123.buy.service.impl;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.domain.learningdb.UserExample;
-import com.wenyanwen123.buy.commons.parameter.rp.login.LoginRp;
-import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
-import com.wenyanwen123.buy.commons.response.ResultCode;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.*;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.domain.learningdb.UserExample;
+import com.wenyanwen123.buy.common.model.dto.login.LoginDTO;
+import com.wenyanwen123.buy.common.model.dto.login.RegisterDTO;
+import com.wenyanwen123.buy.common.response.ResultCode;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.*;
 import com.wenyanwen123.buy.dao.learningdb.UserMapper;
 import com.wenyanwen123.buy.provider.redis.RedisService;
 import com.wenyanwen123.buy.provider.redis.keys.UserKey;
@@ -44,10 +44,10 @@ public class LoginServiceImpl implements LoginService {
      * @Author liww
      * @Date 2020/2/18
      * @Param [param]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
-    public ResultResponse register(RegisterRp param) {
+    public ResultResponse register(RegisterDTO param) {
         LogUtil.serviceStart(log, "注册");
         if (param == null) {
             return ResultResponse.fail("请输入手机号和密码");
@@ -81,10 +81,10 @@ public class LoginServiceImpl implements LoginService {
      * @Author liww
      * @Date 2020/2/17
      * @Param [response, param]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
-    public ResultResponse login(HttpServletResponse response, LoginRp param) {
+    public ResultResponse login(HttpServletResponse response, LoginDTO param) {
         LogUtil.serviceStart(log, "登陆");
         // 查询用户
         UserExample userExample = new UserExample();

@@ -1,7 +1,7 @@
 package com.wenyanwen123.buy.service;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.response.ResultResponse;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -21,7 +21,7 @@ public interface GoodsService {
      * @Author liww
      * @Date 2020/2/20
      * @Param [request, response, model, user]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user);
 
@@ -30,7 +30,7 @@ public interface GoodsService {
      * @Author liww
      * @Date 2020/2/22
      * @Param [request, response, model, user, goodsId]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     ResultResponse goodsDetail(HttpServletRequest request, HttpServletResponse response, Model model, User user, @PathVariable("goodsId")long goodsId);
 

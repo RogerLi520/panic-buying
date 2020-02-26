@@ -1,10 +1,10 @@
 package com.wenyanwen123.buy.dao.learningdb;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.FlashSaleGoods;
-import com.wenyanwen123.buy.commons.domain.learningdb.FlashSaleGoodsExample;
+import com.wenyanwen123.buy.common.domain.learningdb.FlashSaleGoods;
+import com.wenyanwen123.buy.common.domain.learningdb.FlashSaleGoodsExample;
 import java.util.List;
 
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
+import com.wenyanwen123.buy.common.model.vo.goods.GoodsVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -103,18 +103,18 @@ public interface FlashSaleGoodsMapper {
      * @Author liww
      * @Date 2020/2/20
      * @Param []
-     * @return java.util.List<com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsListRr>
+     * @return java.util.List<com.wenyanwen123.buy.common.model.vo.goods.GoodsListRr>
      */
-    List<GoodsRr> selectGoodsList();
+    List<GoodsVO> selectGoodsList();
 
     /**
      * @Desc 查询抢购商品详情
      * @Author liww
      * @Date 2020/2/22
      * @Param [goodsId]
-     * @return com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr
+     * @return com.wenyanwen123.buy.common.model.vo.goods.GoodsRr
      */
-    GoodsRr selectGoodsDetail(long goodsId);
+    GoodsVO selectGoodsDetail(long goodsId);
 
     /**
      * @Desc 减库存

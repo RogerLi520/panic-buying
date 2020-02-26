@@ -1,16 +1,13 @@
 package com.wenyanwen123.buy.provider.rabbitmq;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.Goods;
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsDetailRr;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
-import com.wenyanwen123.buy.commons.util.BeanUtil;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.model.vo.goods.GoodsVO;
+import com.wenyanwen123.buy.common.util.BeanUtil;
 import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
 import com.wenyanwen123.buy.dao.learningdb.SeckillOrderMapper;
 import com.wenyanwen123.buy.provider.rabbitmq.message.SeckillMessage;
 import com.wenyanwen123.buy.provider.redis.RedisService;
-import com.wenyanwen123.buy.service.FlashSaleService;
 import com.wenyanwen123.buy.service.GoodsService;
 import com.wenyanwen123.buy.service.OrderService;
 import org.slf4j.Logger;
@@ -66,7 +63,7 @@ public class MQReceiver {
 			return;
 		}
 		// 查询商品信息
-		GoodsRr goods = flashSaleGoodsMapper.selectGoodsDetail(goodsId);
+		GoodsVO goods = flashSaleGoodsMapper.selectGoodsDetail(goodsId);
 		// 判断是否还有库存
 		int stock = goods.getStockCount();
 		if(stock <= 0) {

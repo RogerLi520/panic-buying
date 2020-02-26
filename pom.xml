@@ -150,7 +150,7 @@
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!-- org.apache.commons -->
+    <!-- org.apache.common -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>

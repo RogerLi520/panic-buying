@@ -1,6 +1,5 @@
 package com.wenyanwen123.buy.controller;
 
-import com.wenyanwen123.buy.commons.response.ResultResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

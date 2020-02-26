@@ -1,8 +1,8 @@
 package com.wenyanwen123.buy.controller;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.LogUtil;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.LogUtil;
 import com.wenyanwen123.buy.service.GoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

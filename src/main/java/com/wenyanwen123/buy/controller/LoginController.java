@@ -1,9 +1,10 @@
 package com.wenyanwen123.buy.controller;
 
-import com.wenyanwen123.buy.commons.parameter.rp.login.LoginRp;
-import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.LogUtil;
+import com.wenyanwen123.buy.common.core.annotation.IgnoreLogin;
+import com.wenyanwen123.buy.common.model.dto.login.LoginDTO;
+import com.wenyanwen123.buy.common.model.dto.login.RegisterDTO;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.LogUtil;
 import com.wenyanwen123.buy.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +26,7 @@ import javax.validation.Valid;
  */
 @Api(value = "登陆")
 @Controller
-@RequestMapping("api/login")
+@RequestMapping("/api/login")
 public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
@@ -42,9 +43,10 @@ public class LoginController {
 
     @ApiOperation(value = "注册")
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
+    @IgnoreLogin
     @ResponseBody
     @PostMapping("/register")
-    public ResultResponse register(@Valid RegisterRp param) {
+    public ResultResponse register(@Valid RegisterDTO param) {
         LogUtil.callStart(log, "注册");
         ResultResponse resultResponse = loginService.register(param);
         LogUtil.outputResult(log, resultResponse);
@@ -53,9 +55,10 @@ public class LoginController {
 
     @ApiOperation(value = "登陆")
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
+    @IgnoreLogin
     @ResponseBody
     @PostMapping("/login")
-    public ResultResponse login(HttpServletResponse response, @Valid LoginRp param) {
+    public ResultResponse login(HttpServletResponse response, @Valid LoginDTO param) {
         LogUtil.callStart(log, "登陆");
         ResultResponse resultResponse = loginService.login(response, param);
         LogUtil.outputResult(log, resultResponse);

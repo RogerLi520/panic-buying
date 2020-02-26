@@ -1,9 +1,9 @@
 package com.wenyanwen123.buy.service;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rp.login.LoginRp;
-import com.wenyanwen123.buy.commons.parameter.rp.login.RegisterRp;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.model.dto.login.LoginDTO;
+import com.wenyanwen123.buy.common.model.dto.login.RegisterDTO;
+import com.wenyanwen123.buy.common.response.ResultResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,18 +20,18 @@ public interface LoginService {
      * @Author liww
      * @Date 2020/2/18
      * @Param [param]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
-    ResultResponse register(RegisterRp param);
+    ResultResponse register(RegisterDTO param);
 
     /**
      * @Desc 登陆
      * @Author liww
      * @Date 2020/2/17
      * @Param [response, param]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
-    ResultResponse login(HttpServletResponse response, LoginRp param);
+    ResultResponse login(HttpServletResponse response, LoginDTO param);
 
     /**
      * @Desc 添加cookie

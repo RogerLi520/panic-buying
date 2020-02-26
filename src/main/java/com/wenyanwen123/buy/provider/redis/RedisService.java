@@ -1,7 +1,5 @@
 package com.wenyanwen123.buy.provider.redis;
 
-import com.alibaba.fastjson.JSON;
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.provider.redis.keys.KeyPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

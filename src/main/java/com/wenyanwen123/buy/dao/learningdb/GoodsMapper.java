@@ -1,7 +1,7 @@
 package com.wenyanwen123.buy.dao.learningdb;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.Goods;
-import com.wenyanwen123.buy.commons.domain.learningdb.GoodsExample;
+import com.wenyanwen123.buy.common.domain.learningdb.Goods;
+import com.wenyanwen123.buy.common.domain.learningdb.GoodsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

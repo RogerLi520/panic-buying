@@ -1,8 +1,9 @@
 package com.wenyanwen123.buy.controller;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.LogUtil;
+import com.wenyanwen123.buy.common.core.annotation.AccessLimit;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.LogUtil;
 import com.wenyanwen123.buy.service.FlashSaleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,6 +58,7 @@ public class FlashSaleController {
 
     @ApiOperation(value = "获取秒杀动态路径")
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
+    @AccessLimit(seconds = 5, maxAccessCount = 10)
     @ResponseBody
     @GetMapping(value = "/path")
     public ResultResponse getSeckillPaht(HttpServletRequest request, User user, @RequestParam("goodsId")long goodsId, @RequestParam(value="verifyCode", defaultValue="0") long verifyCode) {

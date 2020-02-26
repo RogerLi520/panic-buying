@@ -1,6 +1,6 @@
 package com.wenyanwen123.buy.service.impl;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
 import com.wenyanwen123.buy.provider.redis.RedisService;
 import com.wenyanwen123.buy.provider.redis.keys.UserKey;
 import com.wenyanwen123.buy.service.LoginService;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
      * @Author liww
      * @Date 2020/2/21
      * @Param [response, token]
-     * @return com.wenyanwen123.buy.commons.domain.learningdb.User
+     * @return com.wenyanwen123.buy.common.domain.learningdb.User
      */
     @Override
     public User getUserByToken(HttpServletResponse response, String token) {

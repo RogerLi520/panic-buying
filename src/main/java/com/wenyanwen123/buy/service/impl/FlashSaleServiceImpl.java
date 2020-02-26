@@ -1,18 +1,16 @@
 package com.wenyanwen123.buy.service.impl;
 
-import com.wenyanwen123.buy.commons.domain.learningdb.FlashSaleGoods;
-import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
-import com.wenyanwen123.buy.commons.domain.learningdb.User;
-import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
-import com.wenyanwen123.buy.commons.response.ResultCode;
-import com.wenyanwen123.buy.commons.response.ResultResponse;
-import com.wenyanwen123.buy.commons.util.BeanUtil;
-import com.wenyanwen123.buy.commons.util.LogUtil;
-import com.wenyanwen123.buy.commons.util.UUIDUtil;
-import com.wenyanwen123.buy.commons.util.security.MD5Util;
-import com.wenyanwen123.buy.commons.util.security.VerifyCodeUtil;
+import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder;
+import com.wenyanwen123.buy.common.domain.learningdb.User;
+import com.wenyanwen123.buy.common.model.vo.goods.GoodsVO;
+import com.wenyanwen123.buy.common.response.ResultCode;
+import com.wenyanwen123.buy.common.response.ResultResponse;
+import com.wenyanwen123.buy.common.util.BeanUtil;
+import com.wenyanwen123.buy.common.util.LogUtil;
+import com.wenyanwen123.buy.common.util.UUIDUtil;
+import com.wenyanwen123.buy.common.util.security.MD5Util;
+import com.wenyanwen123.buy.common.util.security.VerifyCodeUtil;
 import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
-import com.wenyanwen123.buy.dao.learningdb.SeckillOrderMapper;
 import com.wenyanwen123.buy.provider.rabbitmq.MQSender;
 import com.wenyanwen123.buy.provider.rabbitmq.TopicRabbitConfig;
 import com.wenyanwen123.buy.provider.rabbitmq.message.SeckillMessage;
@@ -72,11 +70,11 @@ public class FlashSaleServiceImpl implements FlashSaleService {
      */
     @PostConstruct
     public void initGoodsStock() {
-        List<GoodsRr> flashSaleGoods = flashSaleGoodsMapper.selectGoodsList();
+        List<GoodsVO> flashSaleGoods = flashSaleGoodsMapper.selectGoodsList();
         if(flashSaleGoods == null) {
             return;
         }
-        for(GoodsRr goods : flashSaleGoods) {
+        for(GoodsVO goods : flashSaleGoods) {
             redisService.set(GoodsKey.goodsStock, goods.getId().toString(), goods.getStockCount());
             goodsStockOverMap.put(goods.getId(), false);
         }
@@ -104,7 +102,7 @@ public class FlashSaleServiceImpl implements FlashSaleService {
      * @Author liww
      * @Date 2020/2/24
      * @Param [request, user, goodsId, verifyCode]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
     public ResultResponse getSeckillPaht(HttpServletRequest request, User user, long goodsId, long verifyCode) {
@@ -129,7 +127,7 @@ public class FlashSaleServiceImpl implements FlashSaleService {
      * @Author liww
      * @Date 2020/2/24
      * @Param [model, user, goodsId, path]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
     public ResultResponse seckill(Model model, User user, long goodsId, String path) {
@@ -171,7 +169,7 @@ public class FlashSaleServiceImpl implements FlashSaleService {
      * @Author liww
      * @Date 2020/2/26
      * @Param [model, user, goodsId]
-     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
     public ResultResponse seckillResult(Model model, User user, long goodsId) {
