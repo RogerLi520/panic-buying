@@ -1,5 +1,6 @@
 package com.wenyanwen123.buy.service.impl;
 
+import com.wenyanwen123.buy.commons.domain.learningdb.FlashSaleGoods;
 import com.wenyanwen123.buy.commons.domain.learningdb.SeckillOrder;
 import com.wenyanwen123.buy.commons.domain.learningdb.User;
 import com.wenyanwen123.buy.commons.parameter.rr.goods.GoodsRr;
@@ -27,13 +28,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.List;
 
 /**
- * @Description: TODO
+ * @Description: 抢购
  * @Author liww
  * @Date 2020/2/23
  * @Version 1.0
@@ -59,6 +62,25 @@ public class FlashSaleServiceImpl implements FlashSaleService {
     private MQSender mqSender;
 
     private HashMap<Long, Boolean> goodsStockOverMap =  new HashMap<Long, Boolean>(); // 商品库存
+
+    /**
+     * @Desc 初始化商品库存
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param []
+     * @return void
+     */
+    @PostConstruct
+    public void initGoodsStock() {
+        List<GoodsRr> flashSaleGoods = flashSaleGoodsMapper.selectGoodsList();
+        if(flashSaleGoods == null) {
+            return;
+        }
+        for(GoodsRr goods : flashSaleGoods) {
+            redisService.set(GoodsKey.goodsStock, goods.getId().toString(), goods.getStockCount());
+            goodsStockOverMap.put(goods.getId(), false);
+        }
+    }
 
     /**
      * @Desc 获取秒杀验证码
