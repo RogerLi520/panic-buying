@@ -26,7 +26,7 @@ public interface FlashSaleService {
      * @Param [response, user, goodsId]
      * @return java.awt.image.BufferedImage
      */
-    BufferedImage getSeckillVerifyCod(HttpServletResponse response, User user, @RequestParam("goodsId") long goodsId);
+    BufferedImage getSeckillVerifyCod(HttpServletResponse response, User user, long goodsId);
 
     /**
      * @Desc 获取动态秒杀路径
@@ -35,7 +35,7 @@ public interface FlashSaleService {
      * @Param [request, user, goodsId, verifyCode]
      * @return com.wenyanwen123.buy.commons.response.ResultResponse
      */
-    ResultResponse getSeckillPaht(HttpServletRequest request, User user, @RequestParam("goodsId")long goodsId, @RequestParam(value="verifyCode", defaultValue="0") long verifyCode);
+    ResultResponse getSeckillPaht(HttpServletRequest request, User user, long goodsId, long verifyCode);
 
     /**
      * @Desc 秒杀
@@ -44,6 +44,15 @@ public interface FlashSaleService {
      * @Param [model, user, goodsId, path]
      * @return com.wenyanwen123.buy.commons.response.ResultResponse
      */
-    ResultResponse seckill(Model model, User user, @RequestParam("goodsId") long goodsId, @PathVariable("path") String path);
+    ResultResponse seckill(Model model, User user, long goodsId, String path);
+
+    /**
+     * @Desc 秒杀结果
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [model, user, goodsId]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    ResultResponse seckillResult(Model model, User user, long goodsId);
 
 }

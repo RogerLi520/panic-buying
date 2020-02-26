@@ -144,4 +144,31 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         return null;
     }
 
+    /**
+     * @Desc 秒杀结果
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [model, user, goodsId]
+     * @return com.wenyanwen123.buy.commons.response.ResultResponse
+     */
+    @Override
+    public ResultResponse seckillResult(Model model, User user, long goodsId) {
+        LogUtil.serviceStart(log, "秒杀结果");
+        //判断是否秒杀到了
+        SeckillOrder seckillOrder = orderService.getSeckillOrderByUserIdGoodsId(user.getUserId(), goodsId);
+        if(seckillOrder != null) {
+            // 秒杀成功
+            return ResultResponse.success("秒杀成功", seckillOrder.getOrderNum());
+        } else {
+            boolean isOver = redisService.exists(SeckillKey.isSellOut, "" + goodsId);
+            if (isOver) {
+                // 售罄
+                return ResultResponse.success("已售罄", -1);
+            } else {
+                // 排队中
+                return ResultResponse.success("排队中", 0);
+            }
+        }
+    }
+
 }

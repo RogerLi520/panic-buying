@@ -81,4 +81,16 @@ public class RedisService {
         return redisUtil.decr(realKey, 1);
     }
 
+    /**
+     * @Desc 判断key是否存在
+     * @Author liww
+     * @Date 2020/2/26
+     * @Param [prefix, key]
+     * @return boolean
+     */
+    public <T> boolean exists(KeyPrefix prefix, String key) {
+        String realKey  = prefix.getPrefix() + key;
+        return  redisUtil.hasKey(realKey);
+    }
+
 }
