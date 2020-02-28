@@ -62,9 +62,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
         LogUtil.serviceStart(log, "获取商品列表");
-        if (user == null) {
-            return "请先登陆";
-        }
         model.addAttribute(user);
         // 取缓存
         String goodsListHtml = redisService.get(GoodsKey.goodsList, "", String.class);

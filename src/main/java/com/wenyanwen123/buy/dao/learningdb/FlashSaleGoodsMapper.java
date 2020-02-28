@@ -123,6 +123,6 @@ public interface FlashSaleGoodsMapper {
      * @Param [goodsId, num]
      * @return int
      */
-    int reduceStock(Long goodsId, Integer num);
+    int reduceStock(@Param("goodsId") Long goodsId, @Param("num") Integer num);
 
 }

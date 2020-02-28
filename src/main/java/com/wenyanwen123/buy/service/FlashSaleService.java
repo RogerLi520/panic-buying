@@ -32,7 +32,7 @@ public interface FlashSaleService {
      * @Param [request, user, goodsId, verifyCode]
      * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
-    ResultResponse getSeckillPaht(HttpServletRequest request, User user, long goodsId, long verifyCode);
+    ResultResponse getSeckillPaht(HttpServletRequest request, User user, long goodsId, Integer verifyCode);
 
     /**
      * @Desc 秒杀

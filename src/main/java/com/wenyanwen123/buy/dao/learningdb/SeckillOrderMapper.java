@@ -103,7 +103,7 @@ public interface SeckillOrderMapper {
      * @Param [userId, goodsId]
      * @return com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder
      */
-    SeckillOrder getSeckillOrderByUserIdGoodsId(Long userId, Long goodsId);
+    SeckillOrder getSeckillOrderByUserIdGoodsId(@Param("userId") Long userId, @Param("goodsId") Long goodsId);
 
     /**
      * @Desc 根据订单编号查询订单

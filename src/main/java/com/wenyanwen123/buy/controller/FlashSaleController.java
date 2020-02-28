@@ -61,7 +61,7 @@ public class FlashSaleController {
     @AccessLimit(seconds = 5, maxAccessCount = 10)
     @ResponseBody
     @GetMapping(value = "/path")
-    public ResultResponse getSeckillPaht(HttpServletRequest request, User user, @RequestParam("goodsId")long goodsId, @RequestParam(value="verifyCode", defaultValue="0") long verifyCode) {
+    public ResultResponse getSeckillPaht(HttpServletRequest request, User user, @RequestParam("goodsId")long goodsId, @RequestParam(value="verifyCode", defaultValue="0") Integer verifyCode) {
         LogUtil.callStart(log, "获取秒杀动态路径");
         ResultResponse resultResponse = flashSaleService.getSeckillPaht(request, user, goodsId, verifyCode);
         LogUtil.outputResult(log, resultResponse);

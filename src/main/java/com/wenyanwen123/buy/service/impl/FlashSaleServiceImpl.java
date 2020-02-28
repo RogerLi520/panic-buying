@@ -105,11 +105,8 @@ public class FlashSaleServiceImpl implements FlashSaleService {
      * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
-    public ResultResponse getSeckillPaht(HttpServletRequest request, User user, long goodsId, long verifyCode) {
+    public ResultResponse getSeckillPaht(HttpServletRequest request, User user, long goodsId, Integer verifyCode) {
         LogUtil.serviceStart(log, "获取秒杀动态路径");
-        if(user == null) {
-            return ResultResponse.fail(ResultCode.TOKEN_EXCEPTION);
-        }
         // 校验验证码
         Integer answers = redisService.get(SeckillKey.verifyCode, user.getUserId() + "," + goodsId, Integer.class);
         if (answers == null || answers - verifyCode != 0) {
@@ -161,7 +158,7 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         seckillMessage.setUser(user);
         String message = BeanUtil.beanToString(seckillMessage);
         mqSender.sendSeckillMessage("topicExchange", TopicRabbitConfig.seckill, message);
-        return null;
+        return ResultResponse.success("排队中...");
     }
 
     /**
