@@ -10,6 +10,7 @@ import com.wenyanwen123.buy.service.LoginService;
 import com.wenyanwen123.buy.service.UserService;
 import com.wenyanwen123.buy.service.impl.LoginServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;
@@ -42,7 +43,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// 判断方法是否被拦截
+		// 判断被拦截的是否是方法
 		if(handler instanceof HandlerMethod) {
 			HandlerMethod hm = (HandlerMethod)handler;
 			// 获取用户信息
@@ -50,13 +51,15 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 			// 判断是否需要登陆
 			if (user == null) {
 				IgnoreLogin ignoreLogin = hm.getMethodAnnotation(IgnoreLogin.class);
-				if (!ignoreLogin.ignore()) {
-					render(response, "请先登陆");
+				if (ignoreLogin == null || !ignoreLogin.ignore()) {
+					response.setStatus(HttpStatus.SC_UNAUTHORIZED);
+					request.getRequestDispatcher("/api/login/page").forward(request, response);
 					return false;
 				}
+			} else {
+				// 将user信息存入自定义容器中
+				UserContext.setUser(user);
 			}
-			// 将user信息存入自定义容器中
-			UserContext.setUser(user);
 
 			// 获取@AccessLimit注解
 			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
@@ -86,7 +89,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 					redisService.incr(accessKey, key);
 				} else {
 					// 提示访问频繁
-					render(response, "访问过于频繁");
+					render(response, "访问过于频繁，请于" + seconds + "秒后刷新重试!");
 					return false;
 				}
 			}

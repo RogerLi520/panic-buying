@@ -1,5 +1,7 @@
 package com.wenyanwen123.buy.controller;
 
+import com.wenyanwen123.buy.common.core.annotation.AccessLimit;
+import com.wenyanwen123.buy.common.core.annotation.IgnoreLogin;
 import com.wenyanwen123.buy.common.domain.learningdb.User;
 import com.wenyanwen123.buy.common.response.ResultResponse;
 import com.wenyanwen123.buy.common.util.LogUtil;
@@ -35,6 +37,7 @@ public class GoodsController {
 
     @ApiOperation(value = "获取商品列表")
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
+    @IgnoreLogin
     @ResponseBody
     @GetMapping(value = "/list", produces="text/html")
     public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model, User user) {

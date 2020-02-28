@@ -27,10 +27,9 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		InterceptorRegistration accessRegistration = registry.addInterceptor(accessInterceptor);
-		// 排除配置
-		accessRegistration.excludePathPatterns("/api/login/page", "/css/**", "/images/**", "/js/**");
 		// 拦截配置
-		accessRegistration.addPathPatterns("/**");
+		accessRegistration.addPathPatterns("/**")
+				.excludePathPatterns("/api/login/page", "/css/**", "/images/**", "/js/**");
 	}
 	
 }

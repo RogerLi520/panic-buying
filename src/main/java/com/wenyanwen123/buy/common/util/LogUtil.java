@@ -32,7 +32,11 @@ public class LogUtil {
      * @return void
      */
     public static void callStart(Logger logger, String targetInfo) {
-        logger.debug(targetInfo + "接口调用开始，" + UserContext.getUser().getUserId());
+        if (UserContext.getUser() != null) {
+            logger.debug(targetInfo + "接口调用开始，" + UserContext.getUser().getUserId());
+        } else {
+            logger.debug(targetInfo + "接口调用开始");
+        }
     }
 
     /**

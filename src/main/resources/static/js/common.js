@@ -49,3 +49,24 @@ function timestampToTime(timestamp) {
     var s = date.getSeconds();
     return Y+M+D+h+m+s;
 }
+
+/**
+ * 拦截所有ajax请求的返回值
+ */
+$.ajaxSetup({
+    complete: function(XMLHttpRequest, textStatus) {
+
+    },
+    statusCode: {
+        401: function() {
+            alert('登录失效，请重新登录');
+            window.location.href = "/api/login/page";
+        },
+        504: function() {
+            alert('数据获取/输入失败，服务器没有响应。504');
+        },
+        500: function() {
+            alert('服务器有误。500');
+        }
+    }
+});
