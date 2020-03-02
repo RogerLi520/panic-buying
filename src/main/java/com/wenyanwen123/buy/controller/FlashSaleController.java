@@ -72,7 +72,7 @@ public class FlashSaleController {
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
     @ResponseBody
     @PostMapping(value = "/{path}/seckill")
-    public ResultResponse seckill(Model model, User user, @RequestParam("goodsId") long goodsId, @PathVariable("path") String path) {
+    public ResultResponse seckill(Model model, User user, @RequestParam("goodsId") Long goodsId, @PathVariable("path") String path) {
         LogUtil.callStart(log, "秒杀");
         ResultResponse resultResponse = flashSaleService.seckill(model, user, goodsId, path);
         LogUtil.outputResult(log, resultResponse);

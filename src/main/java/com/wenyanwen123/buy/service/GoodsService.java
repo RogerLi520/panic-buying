@@ -34,4 +34,13 @@ public interface GoodsService {
      */
     ResultResponse goodsDetail(HttpServletRequest request, HttpServletResponse response, Model model, User user, @PathVariable("goodsId")long goodsId);
 
+    /**
+     * @Desc 初始化秒杀商品库存
+     * @Author liww
+     * @Date 2020/3/1
+     * @Param []
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
+     */
+    ResultResponse initGoodsStock();
+
 }

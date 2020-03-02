@@ -14,7 +14,7 @@ public class SeckillKey extends BasePrefix{
 
 	public static SeckillKey isSellOut = new SeckillKey(0,"so");
 
-	public static SeckillKey seckillPath = new SeckillKey(60,"sp");
+	public static SeckillKey seckillPath = new SeckillKey(3600 * 24 * 2,"sp");
 
 	public static SeckillKey verifyCode = new SeckillKey(300, "vc");
 

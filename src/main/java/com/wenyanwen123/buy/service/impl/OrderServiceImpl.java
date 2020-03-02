@@ -93,6 +93,8 @@ public class OrderServiceImpl implements OrderService {
             seckillOrderSnapshot.setGoodsTitle(goods.getGoodsTitle());
             seckillOrderSnapshot.setGoodsImg(goods.getGoodsImg());
             seckillOrderSnapshot.setGoodsDetail(goods.getGoodsDetail());
+            seckillOrderSnapshot.setStockCount(goods.getStockCount());
+            seckillOrderSnapshot.setThreadName(Thread.currentThread().getName());
             seckillOrderSnapshotMapper.insert(seckillOrderSnapshot);
             // 将订单存入redis缓存中
             redisService.set(OrderKey.seckillOrder, user.getUserId() + "_" + goods.getGoodsId(), seckillOrder);

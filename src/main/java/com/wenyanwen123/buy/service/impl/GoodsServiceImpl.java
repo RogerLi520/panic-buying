@@ -4,6 +4,7 @@ import com.wenyanwen123.buy.common.domain.learningdb.SeckillOrder;
 import com.wenyanwen123.buy.common.domain.learningdb.User;
 import com.wenyanwen123.buy.common.model.vo.goods.GoodsDetailVO;
 import com.wenyanwen123.buy.common.model.vo.goods.GoodsVO;
+import com.wenyanwen123.buy.common.response.ResultCode;
 import com.wenyanwen123.buy.common.response.ResultResponse;
 import com.wenyanwen123.buy.common.util.DateUtil;
 import com.wenyanwen123.buy.common.util.LogUtil;
@@ -11,6 +12,7 @@ import com.wenyanwen123.buy.dao.learningdb.FlashSaleGoodsMapper;
 import com.wenyanwen123.buy.dao.learningdb.GoodsMapper;
 import com.wenyanwen123.buy.provider.redis.RedisService;
 import com.wenyanwen123.buy.provider.redis.keys.GoodsKey;
+import com.wenyanwen123.buy.service.FlashSaleService;
 import com.wenyanwen123.buy.service.GoodsService;
 import com.wenyanwen123.buy.service.OrderService;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +44,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private FlashSaleService flashSaleService;
 
     @Autowired
     private GoodsMapper goodsMapper;
@@ -120,6 +125,20 @@ public class GoodsServiceImpl implements GoodsService {
             goodsDetailRr.setPurchased(true);
         }
         return ResultResponse.success(goodsDetailRr);
+    }
+
+    /**
+     * @Desc 初始化秒杀商品库存
+     * @Author liww
+     * @Date 2020/3/1
+     * @Param []
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
+     */
+    @Override
+    public ResultResponse initGoodsStock() {
+        LogUtil.serviceStart(log, "初始化秒杀商品库存");
+        flashSaleService.initGoodsStock();
+        return ResultResponse.success("初始化完成");
     }
 
 }

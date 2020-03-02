@@ -17,6 +17,15 @@ import java.awt.image.BufferedImage;
 public interface FlashSaleService {
 
     /**
+     * @Desc 初始化秒杀商品库存
+     * @Author liww
+     * @Date 2020/3/1
+     * @Param []
+     * @return void
+     */
+    void initGoodsStock();
+
+    /**
      * @Desc 获取秒杀验证码
      * @Author liww
      * @Date 2020/2/23

@@ -57,4 +57,15 @@ public class GoodsController {
         return resultResponse;
     }
 
+    @ApiOperation(value = "初始化秒杀商品库存")
+    @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
+    @ResponseBody
+    @GetMapping(value = "/init/stock")
+    public ResultResponse initGoodsStock() {
+        LogUtil.callStart(log, "初始化秒杀商品库存");
+        ResultResponse resultResponse = goodsService.initGoodsStock();
+        LogUtil.outputResult(log, resultResponse);
+        return resultResponse;
+    }
+
 }

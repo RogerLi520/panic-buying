@@ -20,6 +20,7 @@ import com.wenyanwen123.buy.provider.redis.keys.SeckillKey;
 import com.wenyanwen123.buy.service.FlashSaleService;
 import com.wenyanwen123.buy.service.OrderService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,7 @@ public class FlashSaleServiceImpl implements FlashSaleService {
      * @return void
      */
     @PostConstruct
+    @Override
     public void initGoodsStock() {
         List<GoodsVO> flashSaleGoods = flashSaleGoodsMapper.selectGoodsList();
         if(flashSaleGoods == null) {
@@ -141,14 +143,14 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         if (seckillOrder != null) {
             return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "请勿重复秒杀");
         }
-        // 判断是否还有库存(线程不安全，需要改进)
+        // 判断是否还有库存
         boolean isOver = goodsStockOverMap.get(goodsId);
         if (isOver) {
             return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "商品已秒杀完毕");
         }
         // 预减库存
         long stock = redisService.decr(GoodsKey.goodsStock, "" + goodsId);
-        if(stock < 0) {
+        if(stock < 0) { // 不能写成等于0
             goodsStockOverMap.put(goodsId, true);
             return ResultResponse.fail(ResultCode.DEFAULT_FAIL_CODE, "商品已秒杀完毕");
         }
