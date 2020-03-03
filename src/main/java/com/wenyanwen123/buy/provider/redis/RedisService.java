@@ -68,6 +68,19 @@ public class RedisService {
     }
 
     /**
+     * @Desc 删除一个
+     * @Author liww
+     * @Date 2020/3/3
+     * @Param [prefix, key]
+     * @return void
+     */
+    public boolean deleteOne(KeyPrefix prefix, String key) {
+        String realKey  = prefix.getPrefix() + key;
+        boolean result = redisUtil.delOne(realKey);
+        return result;
+    }
+
+    /**
      * @Desc 减
      * @Author liww
      * @Date 2020/2/24

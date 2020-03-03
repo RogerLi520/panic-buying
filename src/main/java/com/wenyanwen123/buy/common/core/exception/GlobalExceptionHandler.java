@@ -12,57 +12,62 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @Desc 全局异常处理
  * @Author liww
- * @Date 2019/6/10
+ * @Date 2020/3/3
  * @Version 1.0
  */
-@ControllerAdvice(basePackages = "com.wenyanwen123.buy.common.exception")
+@ControllerAdvice(basePackages = "com.wenyanwen123.buy.controller")
 public class GlobalExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * 全局异常
-     *
-     * @param e
-     * @return
+     * @Desc 全局异常
+     * @Author liww
+     * @Date 2020/3/3
+     * @Param [e]
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResultResponse errorResult(Exception e) {
         printfExceptionInfo(e);
-        return ResultResponse.fail(ResultCode.GLOBAL_EXCEPTION, ResultCodeMap.getMsgByCode(ResultCode.GLOBAL_EXCEPTION));
+        return ResultResponse.fail(ResultCode.GLOBAL_EXCEPTION);
     }
 
     /**
-     * Token异常
-     *
-     * @param e
-     * @return
+     * @Desc Token异常
+     * @Author liww
+     * @Date 2020/3/3
+     * @Param [e]
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @ExceptionHandler(MyTokenException.class)
     @ResponseBody
     public ResultResponse exception(MyTokenException e) {
+        printfExceptionInfo(e);
         return ResultResponse.fail(ResultCode.TOKEN_EXCEPTION);
     }
 
     /**
-     * 参数验证异常
-     *
-     * @param e
-     * @return
-     * @throws Exception
+     * @Desc 参数验证异常
+     * @Author liww
+     * @Date 2020/3/3
+     * @Param [e]
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @ExceptionHandler(value = MyParamException.class)
     @ResponseBody
     public ResultResponse paramErrorHandler(MyParamException e) {
         printfExceptionInfo(e);
-        return new ResultResponse(ResultCode.ILLEGAL_PARAMETER_CODE, ResultCodeMap.getMsgByCode((ResultCode.ILLEGAL_PARAMETER_CODE)));
+        return new ResultResponse(ResultCode.ILLEGAL_PARAMETER_CODE);
     }
 
     /**
-     * 异常信息打印
-     *
-     * @param e
+     * @Desc 打印异常信息
+     * @Author liww
+     * @Date 2020/3/3
+     * @Param [e]
+     * @return void
      */
     private void printfExceptionInfo(Exception e) {
         StringBuffer strBuf = new StringBuffer();
@@ -84,7 +89,7 @@ public class GlobalExceptionHandler {
         }
         strBuf.append("**********异常信息结束**********");
         strBuf.append("\r\n");
-        logger.error(strBuf.toString());
+        log.error(strBuf.toString());
     }
 
 }

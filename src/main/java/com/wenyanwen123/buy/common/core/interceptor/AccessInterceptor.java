@@ -12,7 +12,7 @@ import com.wenyanwen123.buy.service.impl.LoginServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -21,7 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 
-@Service
+/**
+ * @Desc 访问拦截器
+ * @Author liww
+ * @Date 2020/3/3
+ * @Version 1.0
+ */
+@Component
 public class AccessInterceptor extends HandlerInterceptorAdapter {
 	
 	@Autowired
@@ -137,16 +143,16 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 	 * @Desc 获取前端传递进来的cookie
 	 * @Author liww
 	 * @Date 2020/2/21
-	 * @Param [request, cookiName]
+	 * @Param [request, cookieName]
 	 * @return java.lang.String
 	 */
-	private String getCookieValue(HttpServletRequest request, String cookiName) {
+	private String getCookieValue(HttpServletRequest request, String cookieName) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null || cookies.length <= 0) {
 			return null;
 		}
 		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals(cookiName)) {
+			if (cookie.getName().equals(cookieName)) {
 				return cookie.getValue();
 			}
 		}

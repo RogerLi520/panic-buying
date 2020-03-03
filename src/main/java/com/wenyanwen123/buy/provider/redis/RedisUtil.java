@@ -80,6 +80,21 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * @Desc 删除缓存
+     * @Author liww
+     * @Date 2020/3/3
+     * @Param [key]
+     * @return boolean
+     */
+    public boolean delOne(String key) {
+        if (key != null) {
+            boolean result = redisTemplate.delete(key);
+            return result;
+        }
+        return false;
+    }
+
     // ============================String=============================
 
     /**
