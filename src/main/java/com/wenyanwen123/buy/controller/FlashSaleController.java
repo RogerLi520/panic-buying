@@ -1,6 +1,7 @@
 package com.wenyanwen123.buy.controller;
 
 import com.wenyanwen123.buy.common.core.annotation.AccessLimit;
+import com.wenyanwen123.buy.common.core.annotation.ApiIdempotent;
 import com.wenyanwen123.buy.common.domain.learningdb.User;
 import com.wenyanwen123.buy.common.response.ResultResponse;
 import com.wenyanwen123.buy.common.util.LogUtil;
@@ -59,6 +60,7 @@ public class FlashSaleController {
     @ApiOperation(value = "获取秒杀动态路径")
     @ApiResponse(code = 200, message = "ok", response = ResultResponse.class)
     @AccessLimit(seconds = 5, maxAccessCount = 10)
+    @ApiIdempotent
     @ResponseBody
     @GetMapping(value = "/path")
     public ResultResponse getSeckillPaht(HttpServletRequest request, User user, @RequestParam("goodsId")long goodsId, @RequestParam(value="verifyCode", defaultValue="0") Integer verifyCode) {

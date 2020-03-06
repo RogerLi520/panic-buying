@@ -43,6 +43,8 @@ public @interface ResultCode {
     // 异常相关
     String GLOBAL_EXCEPTION = "80040"; // 全局异常
 
+    String FREQUENT_VISITS_EXCEPTION = "80041"; // 访问过于频繁异常
+
     // 验证码
     String VERIFICATION_CODE_ERROR = "80500"; // 验证码错误
 

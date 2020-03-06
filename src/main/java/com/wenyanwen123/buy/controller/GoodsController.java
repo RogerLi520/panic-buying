@@ -1,6 +1,7 @@
 package com.wenyanwen123.buy.controller;
 
 import com.wenyanwen123.buy.common.core.annotation.AccessLimit;
+import com.wenyanwen123.buy.common.core.annotation.ApiIdempotent;
 import com.wenyanwen123.buy.common.core.annotation.IgnoreLogin;
 import com.wenyanwen123.buy.common.domain.learningdb.User;
 import com.wenyanwen123.buy.common.response.ResultResponse;

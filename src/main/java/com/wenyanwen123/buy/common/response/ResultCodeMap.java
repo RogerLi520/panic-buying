@@ -28,6 +28,7 @@ public class ResultCodeMap {
         codeAndMsg.put(ResultCode.NOT_LOGIN, "请先登录");
         codeAndMsg.put(ResultCode.LOGIN_OUT_FAIL, "登出失败");
         codeAndMsg.put(ResultCode.GLOBAL_EXCEPTION, "服务器异常");
+        codeAndMsg.put(ResultCode.FREQUENT_VISITS_EXCEPTION, "访问过于频繁，请稍后重试！");
         codeAndMsg.put(ResultCode.LOGIN_USER_PROHIBIT, "账号被禁用，请联系管理员");
         codeAndMsg.put(ResultCode.VERIFICATION_CODE_ERROR, "验证码校验失败");
         codeAndMsg.put(ResultCode.USER_UNAUTHORIZED, "用户未授权");

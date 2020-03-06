@@ -26,8 +26,8 @@ public interface ApiIdempotentTokenService {
      * @Author liww
      * @Date 2020/3/3
      * @Param [request]
-     * @return com.wenyanwen123.buy.common.response.ResultResponse
+     * @return void
      */
-    ResultResponse checkApiToken(HttpServletRequest request);
+    void checkApiToken(HttpServletRequest request);
 
 }

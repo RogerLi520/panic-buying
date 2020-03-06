@@ -71,7 +71,10 @@
 <script>
 	$(function() {
 		getDetail();
+		getApiToken();
 	});
+
+	var apiToken;
 
 	function getDetail() {
 		var goodsId = getQueryString("goodsId");
@@ -89,6 +92,23 @@
 				layer.msg("服务器异常");
 			}
 		});
+	}
+
+	function getApiToken() {
+        $.ajax({
+            url : "/api/token/value/",
+            type : "GET",
+            success : function(data) {
+                if (data.success == true) {
+                    apiToken = data.data;
+                } else {
+                    layer.msg(data.resultMsg);
+                }
+            },
+            error : function() {
+
+            }
+        });
 	}
 
 	function render(detail) {
@@ -152,6 +172,9 @@
 				goodsId : goodsId,
 				verifyCode:$("#verifyCode").val()
 			},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("apiToken", apiToken);
+            },
 			success : function(data) {
 				if (data.success == true) {
 					var path = data.data;

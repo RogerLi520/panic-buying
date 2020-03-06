@@ -35,6 +35,20 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * @Desc 自定义的运行时异常
+     * @Author liww
+     * @Date 2020/3/4
+     * @Param [e]
+     * @return com.wenyanwen123.buy.common.response.ResultResponse
+     */
+    @ExceptionHandler(value = CustomRuntimeException.class)
+    @ResponseBody
+    public ResultResponse customRuntimeException(CustomRuntimeException e) {
+        printfExceptionInfo(e);
+        return ResultResponse.fail(e.getErrorCode(), e.getMessage());
+    }
+
+    /**
      * @Desc Token异常
      * @Author liww
      * @Date 2020/3/3

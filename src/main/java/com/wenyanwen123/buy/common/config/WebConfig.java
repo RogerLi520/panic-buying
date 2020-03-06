@@ -14,10 +14,10 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
 	@Autowired
-	UserArgumentResolver userArgumentResolver;
+	private UserArgumentResolver userArgumentResolver;
 	
 	@Autowired
-	AccessInterceptor accessInterceptor;
+	private AccessInterceptor accessInterceptor;
 	
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {

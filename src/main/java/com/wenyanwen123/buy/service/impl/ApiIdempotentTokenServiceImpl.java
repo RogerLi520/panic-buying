@@ -1,5 +1,6 @@
 package com.wenyanwen123.buy.service.impl;
 
+import com.wenyanwen123.buy.common.core.exception.ApiTokenException;
 import com.wenyanwen123.buy.common.response.ResultCode;
 import com.wenyanwen123.buy.common.response.ResultResponse;
 import com.wenyanwen123.buy.common.util.LogUtil;
@@ -41,7 +42,7 @@ public class ApiIdempotentTokenServiceImpl implements ApiIdempotentTokenService 
         LogUtil.serviceStart(log, "获取幂等接口token");
         String apiToken = UUIDUtil.getUuid();
         redisService.set(ApiTokenKey.apiTokenKey, apiToken, apiToken);
-        return ResultResponse.success(apiToken);
+        return ResultResponse.success(ResultCode.DEFAULT_FAIL_CODE, apiToken);
     }
 
     /**
@@ -52,7 +53,7 @@ public class ApiIdempotentTokenServiceImpl implements ApiIdempotentTokenService 
      * @return com.wenyanwen123.buy.common.response.ResultResponse
      */
     @Override
-    public ResultResponse checkApiToken(HttpServletRequest request) {
+    public void checkApiToken(HttpServletRequest request) {
         LogUtil.serviceStart(log, "校验api token");
         String apiToken = request.getHeader(API_IDEMPOTENT_TOKEN_NAME);
         // header中不存在token
@@ -60,19 +61,18 @@ public class ApiIdempotentTokenServiceImpl implements ApiIdempotentTokenService 
             apiToken = request.getParameter(API_IDEMPOTENT_TOKEN_NAME);
             // parameter中也不存在token
             if (StringUtils.isEmpty(apiToken)) {
-                return ResultResponse.fail(ResultCode.ILLEGAL_PARAMETER_CODE, "非法参数");
+                throw new ApiTokenException("参数错误");
             }
         }
 
         if (!redisService.exists(ApiTokenKey.apiTokenKey, apiToken)) {
-            return ResultResponse.fail(ResultCode.TOKEN_EXCEPTION, "参数错误");
+            throw new ApiTokenException("参数错误");
         }
 
         boolean result = redisService.deleteOne(ApiTokenKey.apiTokenKey, apiToken);
         if (!result) {
-            return ResultResponse.fail(ResultCode.DELETE_FAIL_CODE, "操作失败");
+            throw new ApiTokenException("操作失败");
         }
-        return ResultResponse.success("操作成功");
     }
 
 }
